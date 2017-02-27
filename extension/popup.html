@@ -89,6 +89,9 @@
       cursor: pointer;
     }
     .tab:hover {
+      color: #777;
+    }
+    .tab.active  {
       color: #fff;
       background-color: #777;
     }
@@ -160,6 +163,7 @@
   <nav>
     <input id="filter" placeholder="Input Korean consonant(ㄱ,ㄴ,ㄷ...) for searching." />
     <ul>
+      <li class="tab none" data-type="recently">Recently</li>
       <li class="tab" data-type="general">General</li>
       <li class="tab" data-type="numeric">Numeric</li>
       <li class="tab" data-type="math">Math</li>
@@ -172,7 +176,6 @@
       <li class="tab" data-type="korean">Korean</li>
       <li class="tab" data-type="japanese">Japanese</li>
       <li class="tab" data-type="emoji">Emoji</li>
-      <li class="tab" data-type="recently">Recently</li>
     </ul>
   </nav>
   <main>

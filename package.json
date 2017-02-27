@@ -1,0 +1,20 @@
+{
+  "name": "special-character",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "zip": "zip -r extension.zip extension",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonism/special-characters-finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wonism/special-characters-finder/issues"
+  },
+  "homepage": "https://github.com/wonism/special-characters-finder#readme"
+}

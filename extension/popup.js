@@ -69,6 +69,11 @@
     (function (i) {
       tabs[i].textContent = i18n[locale][tabs[i].getAttribute('data-type')];
       tabs[i].addEventListener('click', function () {
+        for (var j = 0, len2 = tabs.length; j < len2; j++) {
+          tabs[j].classList.remove('active');
+        }
+
+        tabs[i].classList.add('active');
         filterByTab(tabs[i].getAttribute('data-type'));
       });
     })(i);
@@ -93,7 +98,7 @@
 
   // Declare functions
   function getLocale() {
-    var language = navigator.language;
+    var language = navigator.languages && navigator.languages[0] || 'en';
 
     if (language.match(/^ko$/)) {
       return language;
