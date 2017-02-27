@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html {
+      height: 320px;
+      overflow: hidden;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      width: 480px;
+      height: 320px;
+      max-height: 320px;
+      background-color: transparent;
+      font-size: 0;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+    * {
+      -webkit-use-select: none;
+      -moz-use-select: none;
+      use-select: none;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    header {
+      margin: 0 0 16px;
+    }
+    h2 {
+      margin: 0;
+      padding: 15px 0;
+      line-height: 20px;
+      color: #000;
+      text-align: center;
+      font-size: 18px;
+    }
+    main {
+      position: relative;
+      padding: 34px 10px 10px;
+      height: 270px;
+      overflow-y: scroll;
+    }
+    #output {
+      position: absolute;
+      top: 0;
+      right: 16px;
+      left: 10px;
+      padding: 0;
+      width: 288px;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid #000;
+      outline: none;
+      font-size: 12px;
+    }
+    #copy {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      width: 60px;
+      height: 24px;
+      height: 24px;
+      border: 1px solid #000;
+      outline: none;
+      cursor: pointer;
+      z-index: 3;
+    }
+    nav {
+      display: inline-block;
+      float: left;
+      width: 166px;
+      height: 270px;
+      overflow-y: scroll;
+    }
+    ul {
+      display: block;
+      padding: 0;
+      list-style: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .tab {
+      height: 24px;
+      line-height: 24px;
+      font-size: 12px;
+      border-bottom: 1px solid #000;
+      cursor: pointer;
+    }
+    .tab:hover {
+      color: #fff;
+      background-color: #777;
+    }
+    #filter {
+      display: block;
+      width: 100%;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid #000;
+      border-right: none;
+      border-left: none;
+      outline: none;
+      font-size: 12px;
+    }
+    .clearfix:after, .clearfix:before {
+      display: block;
+      content: '';
+      clear: both;
+    }
+    .none {
+      display: none !important;
+    }
+    .characters-pane p {
+      font-size: 10px;
+    }
+    .characters-pane button {
+      display: inline-block;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      background-color: transparent;
+      border: 1px solid #000;
+      outline: none;
+      vertical-align: middle;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .characters-pane button:hover {
+      color: #fa5a5a;
+      font-size: 18px;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 0px;
+      border-radius: 3px;
+      border: 1px solid #000;
+    }
+    ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {
+      display: block;
+      height: 0px;
+      background: transparent;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+      -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.0);
+    }
+    ::-webkit-scrollbar-thumb {
+      height: 0px;
+      width: 3px;
+      background: #333;
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.0);
+    }
+  </style>
+</head>
+<body class="clearfix">
+  <h2>Special Character Finder</h2>
+  <nav>
+    <input id="filter" placeholder="Input Korean consonant(ㄱ,ㄴ,ㄷ...) for searching." />
+    <ul>
+      <li class="tab" data-type="general">General</li>
+      <li class="tab" data-type="numeric">Numeric</li>
+      <li class="tab" data-type="math">Math</li>
+      <li class="tab" data-type="currency">Currency</li>
+      <li class="tab" data-type="unit">Unit</li>
+      <li class="tab" data-type="boxDrawing">Box drawing</li>
+      <li class="tab" data-type="arrow">Arrow</li>
+      <li class="tab" data-type="circleBracket">Circle, Bracket</li>
+      <li class="tab" data-type="greekLatin">Greek, Latin</li>
+      <li class="tab" data-type="korean">Korean</li>
+      <li class="tab" data-type="japanese">Japanese</li>
+      <li class="tab" data-type="emoji">Emoji</li>
+      <li class="tab" data-type="recently">Recently</li>
+    </ul>
+  </nav>
+  <main>
+    <textarea id="output" placeholder="Output"></textarea>
+    <button id="copy">Copy</button>
+    <div class="characters-pane none" data-consonant="ㄱ">
+      <button>　</button><button>！</button><button>＇</button><button>，</button><button>．</button><button>／</button><button>：</button><button>；</button><button>？</button><button>＾</button>
+      <button>＿</button><button>｀</button><button>｜</button><button>￣</button><button>、</button><button>、</button><button>。</button><button>·</button><button>‥</button><button>…</button>
+      <button>¨</button><button>〃</button><button>­</button><button>―</button><button>∥</button><button>＼</button><button>∼</button><button>´</button><button>～</button><button>ˇ</button>
+      <button>˘</button><button>˝</button><button>˚</button><button>˙</button><button>¸</button><button>˛</button><button>¡</button><button>¿</button><button>ː</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㄲ">
+      <button>Æ</button><button>Ð</button><button>Ħ</button><button>Ĳ</button><button>Ŀ</button><button>Ł</button><button>Ø</button><button>Œ</button><button>Þ</button><button>Ŧ</button><button>Ŋ</button>
+      <button>æ</button><button>đ</button><button>ð</button><button>ħ</button><button>ı</button><button>ĳ</button><button>ĸ</button><button>ŀ</button><button>ł</button><button>ø</button><button>œ</button>
+      <button>ß</button><button>þ</button><button>ŧ</button><button>ŋ</button><button>ŉ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㄴ">
+      <button>＂</button><button>（</button><button>）</button><button>［</button><button>］</button><button>｛</button><button>｝</button><button>‘</button><button>’</button><button>“</button>
+      <button>”</button><button>〔</button><button>〕</button><button>〈</button><button>〉</button><button>《</button><button>》</button><button>「</button><button>」</button><button>『</button>
+      <button>』</button><button>【</button><button>】</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㄷ">
+      <button>＋</button><button>－</button><button>＜</button><button>＝</button><button>＞</button><button>±</button><button>×</button><button>÷</button><button>≠</button><button>≤</button>
+      <button>≥</button><button>∞</button><button>∴</button><button>♂</button><button>♀</button><button>∠</button><button>⊥</button><button>⌒</button><button>∂</button><button>∇</button><button>≡</button>
+      <button>≒</button><button>≪</button><button>≫</button><button>√</button><button>∽</button><button>∝</button><button>∵</button><button>∫</button><button>∬</button><button>∈</button><button>∋</button>
+      <button>⊆</button><button>⊇</button><button>⊂</button><button>⊃</button><button>∪</button><button>∩</button><button>∧</button><button>∨</button><button>￢</button><button>⇒</button><button>⇔</button>
+      <button>∀</button><button>∃</button><button>∮</button><button>∑</button><button>∏</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㄸ">
+      <button>ぁ</button><button>あ</button><button>ぃ</button><button>い</button><button>ぅ</button><button>う</button><button>ぇ</button><button>え</button><button>ぉ</button><button>お</button>
+      <button>か</button><button>が</button><button>き</button><button>ぎ</button><button>く</button><button>ぐ</button><button>け</button><button>げ</button><button>こ</button><button>ご</button>
+      <button>さ</button><button>ざ</button><button>し</button><button>じ</button><button>す</button><button>ず</button><button>せ</button><button>ぜ</button><button>そ</button><button>ぞ</button>
+      <button>た</button><button>だ</button><button>ち</button><button>ぢ</button><button>っ</button><button>つ</button><button>づ</button><button>て</button><button>で</button><button>と</button>
+      <button>ど</button><button>な</button><button>に</button><button>ぬ</button><button>ね</button><button>の</button><button>は</button><button>ば</button><button>ぱ</button><button>ひ</button>
+      <button>び</button><button>ぴ</button><button>ふ</button><button>ぶ</button><button>ぷ</button><button>へ</button><button>べ</button><button>ぺ</button><button>ほ</button><button>ぼ</button>
+      <button>ぽ</button><button>ま</button><button>み</button><button>む</button><button>め</button><button>も</button><button>ゃ</button><button>や</button><button>ゅ</button><button>ゆ</button>
+      <button>ょ</button><button>よ</button><button>ら</button><button>り</button><button>る</button><button>れ</button><button>ろ</button><button>ゎ</button><button>わ</button><button>ゐ</button>
+      <button>ゑ</button><button>を</button><button>ん</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㄹ">
+      <button>＄</button><button>％</button><button>￦</button><button>Ｆ</button><button>′</button><button>″</button><button>℃</button><button>Å</button><button>￠</button><button>￡</button>
+      <button>￥</button><button>¤</button><button>℉</button><button>‰</button><button>?</button><button>㎕</button><button>㎖</button><button>㎗</button><button>ℓ</button><button>㎘</button>
+      <button>㏄</button><button>㎣</button><button>㎤</button><button>㎥</button><button>㎥</button><button>㎦</button><button>㎙</button><button>㎚</button><button>㎛</button><button>㎜</button>
+      <button>㎝</button><button>㎞</button><button>㎟</button><button>㎠</button><button>㎡</button><button>㎢</button><button>㏊</button><button>㎍</button><button>㎎</button><button>㎏</button>
+      <button>㏏</button><button>㎈</button><button>㎉</button><button>㏈</button><button>㎧</button><button>㎨</button><button>㎰</button><button>㎱</button><button>㎲</button><button>㎳</button>
+      <button>㎴</button><button>㎵</button><button>㎶</button><button>㎷</button><button>㎸</button><button>㎹</button><button>㎀</button><button>㎁</button><button>㎂</button><button>㎃</button>
+      <button>㎄</button><button>㎺</button><button>㎻</button><button>㎼</button><button>㎽</button><button>㎾</button><button>㎿</button><button>㎐</button><button>㎑</button><button>㎒</button>
+      <button>㎓</button><button>㎔</button><button>Ω</button><button>㏀</button><button>㏁</button><button>㎊</button><button>㎋</button><button>㎌</button><button>㏖</button><button>㏅</button>
+      <button>㎭</button><button>㎮</button><button>㎯</button><button>㏛</button><button>㎩</button><button>㎪</button><button>㎫</button><button>㎬</button><button>㏝</button><button>㏐</button>
+      <button>㏓</button><button>㏃</button><button>㏉</button><button>㏜</button><button>㏆</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅁ">
+      <button>＃</button><button>＆</button><button>＊</button><button>＠</button><button>§</button><button>※</button><button>☆</button><button>★</button><button>○</button><button>●</button>
+      <button>◎</button><button>◇</button><button>◆</button><button>□</button><button>■</button><button>△</button><button>▲</button><button>▽</button><button>▼</button><button>→</button><button>←</button>
+      <button>↑</button><button>↓</button><button>↔</button><button>〓</button><button>◁</button><button>◀</button><button>▷</button><button>▶</button><button>♤</button><button>♠</button><button>♡</button>
+      <button>♥</button><button>♧</button><button>♣</button><button>⊙</button><button>◈</button><button>▣</button><button>◐</button><button>◑</button><button>▒</button><button>▤</button><button>▥</button>
+      <button>▨</button><button>▧</button><button>▦</button><button>▩</button><button>♨</button><button>☏</button><button>☎</button><button>☜</button><button>☞</button><button>¶</button><button>†</button>
+      <button>‡</button><button>↕</button><button>↗</button><button>↙</button><button>↖</button><button>↘</button><button>♭</button><button>♩</button><button>♪</button><button>♬</button><button>㉿</button>
+      <button>㈜</button><button>№</button><button>㏇</button><button>™</button><button>㏂</button><button>㏘</button><button>℡</button><button>?</button><button>ª</button><button>º</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅂ">
+      <button>─</button><button>│</button><button>┌</button><button>┐</button><button>┘</button><button>└</button><button>├</button><button>┬</button><button>┤</button><button>┴</button><button>│</button>
+      <button>━</button><button>┃</button><button>┏</button><button>┓</button><button>┛</button><button>┗</button><button>┣</button><button>┳</button><button>┫</button><button>┻</button><button>╋</button>
+      <button>┠</button><button>┯</button><button>┨</button><button>┷</button><button>┿</button><button>┝</button><button>┰</button><button>┥</button><button>┸</button><button>╂</button><button>┒</button>
+      <button>┑</button><button>┚</button><button>┙</button><button>┖</button><button>┕</button><button>┎</button><button>┍</button><button>┞</button><button>┟</button><button>┡</button><button>┢</button>
+      <button>┦</button><button>┧</button><button>┩</button><button>┪</button><button>┭</button><button>┮</button><button>┱</button><button>┲</button><button>┵</button><button>┶</button><button>┹</button>
+      <button>┺</button><button>┽</button><button>┾</button><button>╀</button><button>╁</button><button>╃</button><button>╄</button><button>╅</button><button>╆</button><button>╇</button><button>╈</button>
+      <button>╉</button><button>╊</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅃ">
+      <button>ァ</button><button>ア</button><button>ィ</button><button>イ</button><button>ゥ</button><button>ウ</button><button>ェ</button><button>エ</button><button>ォ</button><button>オ</button>
+      <button>カ</button><button>ガ</button><button>キ</button><button>ギ</button><button>ク</button><button>グ</button><button>ケ</button><button>ゲ</button><button>コ</button><button>ゴ</button>
+      <button>サ</button><button>ザ</button><button>シ</button><button>ジ</button><button>ス</button><button>ズ</button><button>セ</button><button>ゼ</button><button>ソ</button><button>ゾ</button>
+      <button>タ</button><button>ダ</button><button>チ</button><button>ヂ</button><button>ッ</button><button>ツ</button><button>ヅ</button><button>テ</button><button>デ</button><button>ト</button>
+      <button>ド</button><button>ナ</button><button>ニ</button><button>ヌ</button><button>ネ</button><button>ノ</button><button>ハ</button><button>バ</button><button>パ</button><button>ヒ</button>
+      <button>ビ</button><button>ピ</button><button>フ</button><button>ブ</button><button>プ</button><button>ヘ</button><button>ベ</button><button>ペ</button><button>ホ</button><button>ボ</button>
+      <button>ポ</button><button>マ</button><button>ミ</button><button>ム</button><button>メ</button><button>モ</button><button>ャ</button><button>ヤ</button><button>ュ</button><button>ユ</button>
+      <button>ョ</button><button>ヨ</button><button>ラ</button><button>リ</button><button>ル</button><button>レ</button><button>ロ</button><button>ヮ</button><button>ワ</button><button>ヰ</button>
+      <button>ヱ</button><button>ヲ</button><button>ン</button><button>ヴ</button><button>ヵ</button><button>ヶ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅅ">
+      <button>㉠</button><button>㉡</button><button>㉢</button><button>㉣</button><button>㉤</button><button>㉥</button><button>㉦</button><button>㉧</button><button>㉨</button><button>㉩</button>
+      <button>㉪</button><button>㉫</button><button>㉬</button><button>㉭</button><button>㉮</button><button>㉯</button><button>㉰</button><button>㉱</button><button>㉲</button><button>㉳</button>
+      <button>㉴</button><button>㉵</button><button>㉶</button><button>㉷</button><button>㉸</button><button>㉹</button><button>㉺</button><button>㉻</button><button>㈀</button><button>㈁</button>
+      <button>㈂</button><button>㈃</button><button>㈄</button><button>㈅</button><button>㈆</button><button>㈇</button><button>㈈</button><button>㈉</button><button>㈊</button><button>㈋</button>
+      <button>㈌</button><button>㈍</button><button>㈎</button><button>㈏</button><button>㈐</button><button>㈑</button><button>㈒</button><button>㈓</button><button>㈔</button><button>㈕</button>
+      <button>㈖</button><button>㈗</button><button>㈘</button><button>㈙</button><button>㈚</button><button>㈛</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅆ">
+      <button>А</button><button>Б</button><button>В</button><button>Г</button><button>Д</button><button>Е</button><button>Ё</button><button>Ж</button><button>З</button><button>И</button><button>Й</button>
+      <button>К</button><button>Л</button><button>М</button><button>Н</button><button>О</button><button>П</button><button>Р</button><button>С</button><button>Т</button><button>У</button><button>Ф</button>
+      <button>Х</button><button>Ц</button><button>Ч</button><button>Ш</button><button>Щ</button><button>Ъ</button><button>Ы</button><button>Ь</button><button>Э</button><button>Ю</button><button>Я</button>
+      <button>а</button><button>б</button><button>в</button><button>г</button><button>д</button><button>е</button><button>ё</button><button>ж</button><button>з</button><button>и</button><button>й</button>
+      <button>к</button><button>л</button><button>м</button><button>н</button><button>о</button><button>п</button><button>р</button><button>с</button><button>т</button><button>у</button><button>ф</button>
+      <button>х</button><button>ц</button><button>ч</button><button>ш</button><button>щ</button><button>ъ</button><button>ы</button><button>ь</button><button>э</button><button>ю</button><button>я</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅇ">
+      <button>ⓐ</button><button>ⓑ</button><button>ⓒ</button><button>ⓓ</button><button>ⓔ</button><button>ⓕ</button><button>ⓖ</button><button>ⓗ</button><button>ⓘ</button><button>ⓙ</button><button>ⓚ</button>
+      <button>ⓛ</button><button>ⓜ</button><button>ⓝ</button><button>ⓞ</button><button>ⓟ</button><button>ⓠ</button><button>ⓡ</button><button>ⓢ</button><button>ⓣ</button><button>ⓤ</button><button>ⓥ</button>
+      <button>ⓦ</button><button>ⓧ</button><button>ⓨ</button><button>ⓩ</button><button>①</button><button>②</button><button>③</button><button>④</button><button>⑤</button><button>⑥</button><button>⑦</button>
+      <button>⑧</button><button>⑨</button><button>⑩</button><button>⑪</button><button>⑫</button><button>⑬</button><button>⑭</button><button>⑮</button><button>⒜</button><button>⒝</button><button>⒞</button>
+      <button>⒟</button><button>⒠</button><button>⒡</button><button>⒢</button><button>⒣</button><button>⒤</button><button>⒥</button><button>⒦</button><button>⒧</button><button>⒨</button><button>⒩</button>
+      <button>⒪</button><button>⒫</button><button>⒬</button><button>⒭</button><button>⒮</button><button>⒯</button><button>⒰</button><button>⒱</button><button>⒲</button><button>⒳</button><button>⒴</button>
+      <button>⒵</button><button>⑴</button><button>⑵</button><button>⑶</button><button>⑷</button><button>⑸</button><button>⑹</button><button>⑺</button><button>⑻</button><button>⑼</button><button>⑽</button>
+      <button>⑾</button><button>⑿</button><button>⒀</button><button>⒁</button><button>⒂</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅈ">
+      <button>ⅰ</button><button>ⅱ</button><button>ⅲ</button><button>ⅳ</button><button>ⅴ</button><button>ⅵ</button><button>ⅶ</button><button>ⅷ</button><button>ⅸ</button><button>ⅹ</button><button>Ⅰ</button>
+      <button>Ⅱ</button><button>Ⅲ</button><button>Ⅳ</button><button>Ⅴ</button><button>Ⅵ</button><button>Ⅶ</button><button>Ⅷ</button><button>Ⅸ</button><button>Ⅹ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅉ">
+      <p>No result</p>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅊ">
+      <button>½</button><button>⅓</button><button>⅔</button><button>¼</button><button>¾</button><button>⅛</button><button>⅜</button><button>⅝</button><button>⅞</button><button>¹</button><button>²</button>
+      <button>³</button><button>⁴</button><button>ⁿ</button><button>₁</button><button>₂</button><button>₃</button><button>₄</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅋ">
+      <button>ㄱ</button><button>ㄲ</button><button>ㄳ</button><button>ㄴ</button><button>ㄵ</button><button>ㄶ</button><button>ㄷ</button><button>ㄸ</button><button>ㄹ</button><button>ㄺ</button>
+      <button>ㄻ</button><button>ㄼ</button><button>ㄽ</button><button>ㄾ</button><button>ㄿ</button><button>ㅀ</button><button>ㅁ</button><button>ㅂ</button><button>ㅃ</button><button>ㅄ</button>
+      <button>ㅅ</button><button>ㅆ</button><button>ㅇ</button><button>ㅈ</button><button>ㅉ</button><button>ㅊ</button><button>ㅋ</button><button>ㅌ</button><button>ㅍ</button><button>ㅎ</button>
+      <button>ㅏ</button><button>ㅐ</button><button>ㅑ</button><button>ㅒ</button><button>ㅓ</button><button>ㅔ</button><button>ㅕ</button><button>ㅖ</button><button>ㅗ</button><button>ㅘ</button>
+      <button>ㅙ</button><button>ㅚ</button><button>ㅛ</button><button>ㅜ</button><button>ㅝ</button><button>ㅞ</button><button>ㅟ</button><button>ㅠ</button><button>ㅡ</button><button>ㅢ</button>
+      <button>ㅣ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅌ">
+      <button>ㅥ</button><button>ㅦ</button><button>ㅧ</button><button>ㅨ</button><button>ㅩ</button><button>ㅪ</button><button>ㅫ</button><button>ㅬ</button><button>ㅭ</button><button>ㅮ</button>
+      <button>ㅯ</button><button>ㅰ</button><button>ㅱ</button><button>ㅲ</button><button>ㅳ</button><button>ㅴ</button><button>ㅵ</button><button>ㅶ</button><button>ㅷ</button><button>ㅸ</button>
+      <button>ㅹ</button><button>ㅺ</button><button>ㅻ</button><button>ㅼ</button><button>ㅽ</button><button>ㅾ</button><button>ㅿ</button><button>ㆀ</button><button>ㆁ</button><button>ㆂ</button>
+      <button>ㆃ</button><button>ㆄ</button><button>ㆅ</button><button>ㆆ</button><button>ㆇ</button><button>ㆈ</button><button>ㆉ</button><button>ㆊ</button><button>ㆋ</button><button>ㆌ</button>
+      <button>ㆍ</button><button>ㆎ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅍ">
+      <button>Ａ</button><button>Ｂ</button><button>Ｃ</button><button>Ｄ</button><button>Ｅ</button><button>Ｆ</button><button>Ｇ</button><button>Ｈ</button><button>Ｉ</button><button>Ｊ</button>
+      <button>Ｋ</button><button>Ｌ</button><button>Ｍ</button><button>Ｎ</button><button>Ｏ</button><button>Ｐ</button><button>Ｑ</button><button>Ｒ</button><button>Ｓ</button><button>Ｔ</button>
+      <button>Ｕ</button><button>Ｖ</button><button>Ｗ</button><button>Ｘ</button><button>Ｙ</button><button>Ｚ</button><button>ａ</button><button>ｂ</button><button>ｃ</button><button>ｄ</button>
+      <button>ｅ</button><button>ｆ</button><button>ｇ</button><button>ｈ</button><button>ｉ</button><button>ｊ</button><button>ｋ</button><button>ｌ</button><button>ｍ</button><button>ｎ</button>
+      <button>ｏ</button><button>ｐ</button><button>ｑ</button><button>ｒ</button><button>ｓ</button><button>ｔ</button><button>ｕ</button><button>ｖ</button><button>ｗ</button><button>ｘ</button>
+      <button>ｙ</button><button>ｚ</button>
+    </div>
+    <div class="characters-pane none" data-consonant="ㅎ">
+      <button>Α</button><button>Β</button><button>Γ</button><button>Δ</button><button>Ε</button><button>Ζ</button><button>Η</button><button>Θ</button><button>Ι</button><button>Κ</button><button>Λ</button>
+      <button>Μ</button><button>Ν</button><button>Ξ</button><button>Ο</button><button>Π</button><button>Ρ</button><button>Σ</button><button>Τ</button><button>Υ</button><button>Φ</button><button>Χ</button>
+      <button>Ψ</button><button>Ω</button><button>α</button><button>β</button><button>γ</button><button>δ</button><button>ε</button><button>ζ</button><button>η</button><button>θ</button><button>ι</button>
+      <button>κ</button><button>λ</button><button>μ</button><button>ν</button><button>ξ</button><button>ο</button><button>π</button><button>ρ</button><button>σ</button><button>τ</button><button>υ</button>
+      <button>φ</button><button>χ</button><button>ψ</button><button>ω</button>
+    </div>
+    <div class="characters-pane none" data-type="general">
+      <button>＃</button><button>＆</button><button>＊</button><button>＠</button><button>§</button><button>※</button><button>☆</button><button>★</button><button>○</button><button>●</button>
+      <button>◎</button><button>◇</button><button>◆</button><button>□</button><button>■</button><button>△</button><button>▲</button><button>▽</button><button>▼</button><button>→</button><button>←</button>
+      <button>↑</button><button>↓</button><button>↔</button><button>〓</button><button>◁</button><button>◀</button><button>▷</button><button>▶</button><button>♤</button><button>♠</button><button>♡</button>
+      <button>♥</button><button>♧</button><button>♣</button><button>⊙</button><button>◈</button><button>▣</button><button>◐</button><button>◑</button><button>▒</button><button>▤</button><button>▥</button>
+      <button>▨</button><button>▧</button><button>▦</button><button>▩</button><button>♨</button><button>☏</button><button>☎</button><button>☜</button><button>☞</button><button>¶</button><button>†</button>
+      <button>‡</button><button>↕</button><button>↗</button><button>↙</button><button>↖</button><button>↘</button><button>♭</button><button>♩</button><button>♪</button><button>♬</button><button>㉿</button>
+      <button>㈜</button><button>№</button><button>㏇</button><button>™</button><button>㏂</button><button>㏘</button><button>℡</button><button>?</button><button>ª</button><button>º</button>
+      <button>　</button><button>！</button><button>＇</button><button>，</button><button>．</button><button>／</button><button>：</button><button>；</button><button>？</button><button>＾</button>
+      <button>＿</button><button>｀</button><button>｜</button><button>￣</button><button>、</button><button>、</button><button>。</button><button>·</button><button>‥</button><button>…</button>
+      <button>¨</button><button>〃</button><button>­</button><button>―</button><button>∥</button><button>＼</button><button>∼</button><button>´</button><button>～</button><button>ˇ</button>
+      <button>˘</button><button>˝</button><button>˚</button><button>˙</button><button>¸</button><button>˛</button><button>¡</button><button>¿</button><button>ː</button>
+      <button>＂</button><button>（</button><button>）</button><button>［</button><button>］</button><button>｛</button><button>｝</button><button>‘</button><button>’</button><button>“</button>
+      <button>”</button><button>〔</button><button>〕</button><button>〈</button><button>〉</button><button>《</button><button>》</button><button>「</button><button>」</button><button>『</button>
+      <button>』</button><button>【</button><button>】</button>
+    </div>
+    <div class="characters-pane none" data-type="numeric">
+      <button>½</button><button>⅓</button><button>⅔</button><button>¼</button><button>¾</button><button>⅛</button><button>⅜</button><button>⅝</button><button>⅞</button><button>¹</button><button>²</button>
+      <button>³</button><button>⁴</button><button>ⁿ</button><button>₁</button><button>₂</button><button>₃</button><button>₄</button>
+      <button>⅐</button><button>⅑</button><button>⅒</button><button>⅓</button><button>⅔</button><button>⅕</button><button>⅖</button><button>⅗</button><button>⅘</button><button>⅙</button><button>⅚</button>
+      <button>⅛</button><button>⅜</button><button>⅝</button><button>⅞</button><button>⅟</button><button>Ⅰ</button><button>Ⅱ</button><button>Ⅲ</button><button>Ⅳ</button><button>Ⅴ</button><button>Ⅵ</button>
+      <button>Ⅶ</button><button>Ⅷ</button><button>Ⅸ</button><button>Ⅹ</button><button>Ⅺ</button><button>Ⅻ</button><button>Ⅼ</button><button>Ⅽ</button><button>Ⅾ</button><button>Ⅿ</button><button>ⅰ</button>
+      <button>ⅱ</button><button>ⅲ</button><button>ⅳ</button><button>ⅴ</button><button>ⅵ</button><button>ⅶ</button><button>ⅷ</button><button>ⅸ</button><button>ⅹ</button><button>ⅺ</button><button>ⅻ</button>
+      <button>ⅼ</button><button>ⅽ</button><button>ⅾ</button><button>ⅿ</button>
+    </div>
+    <div class="characters-pane none" data-type="math">
+      <button>∀</button><button>∁</button><button>∂</button><button>∃</button><button>∄</button><button>∅</button><button>∆</button><button>∇</button><button>∈</button><button>∉</button><button>∊</button>
+      <button>∋</button><button>∌</button><button>∍</button><button>∎</button><button>∏</button><button>∐</button><button>∑</button><button>−</button><button>∓</button><button>∔</button><button>∕</button>
+      <button>∖</button><button>∗</button><button>∘</button><button>∙</button><button>√</button><button>∛</button><button>∜</button><button>∝</button><button>∞</button><button>∟</button><button>∠</button>
+      <button>∡</button><button>∢</button><button>∣</button><button>∤</button><button>∥</button><button>∦</button><button>∧</button><button>∨</button><button>∩</button><button>∪</button><button>∫</button>
+      <button>∬</button><button>∭</button><button>∮</button><button>∯</button><button>∰</button><button>∱</button><button>∲</button><button>∳</button><button>∴</button><button>∵</button><button>∶</button>
+      <button>∷</button><button>∸</button><button>∹</button><button>∺</button><button>∻</button><button>∼</button><button>∽</button><button>∾</button><button>∿</button><button>≀</button><button>≁</button>
+      <button>≂</button><button>≃</button><button>≄</button><button>≅</button><button>≆</button><button>≇</button><button>≈</button><button>≉</button><button>≊</button><button>≋</button><button>≌</button>
+      <button>≍</button><button>≎</button><button>≏</button><button>≐</button><button>≑</button><button>≒</button><button>≓</button><button>≔</button><button>≕</button><button>≖</button><button>≗</button>
+      <button>≘</button><button>≙</button><button>≚</button><button>≛</button><button>≜</button><button>≝</button><button>≞</button><button>≟</button><button>≠</button><button>≡</button><button>≢</button>
+      <button>≣</button><button>≤</button><button>≥</button><button>≦</button><button>≧</button><button>≨</button><button>≩</button><button>≪</button><button>≫</button><button>≬</button><button>≭</button>
+      <button>≮</button><button>≯</button><button>≰</button><button>≱</button><button>≲</button><button>≳</button><button>≴</button><button>≵</button><button>≶</button><button>≷</button><button>≸</button>
+      <button>≹</button><button>≺</button><button>≻</button><button>≼</button><button>≽</button><button>≾</button><button>≿</button><button>⊀</button><button>⊁</button><button>⊂</button><button>⊃</button>
+      <button>⊄</button><button>⊅</button><button>⊆</button><button>⊇</button><button>⊈</button><button>⊉</button><button>⊊</button><button>⊋</button><button>⊌</button><button>⊍</button><button>⊎</button>
+      <button>⊏</button><button>⊐</button><button>⊑</button><button>⊒</button><button>⊓</button><button>⊔</button><button>⊕</button><button>⊖</button><button>⊗</button><button>⊘</button><button>⊙</button>
+      <button>⊚</button><button>⊛</button><button>⊜</button><button>⊝</button><button>⊞</button><button>⊟</button><button>⊠</button><button>⊡</button><button>⊢</button><button>⊣</button><button>⊤</button>
+      <button>⊥</button><button>⊦</button><button>⊧</button><button>⊨</button><button>⊩</button><button>⊪</button><button>⊫</button><button>⊬</button><button>⊭</button><button>⊮</button><button>⊯</button>
+      <button>⊰</button><button>⊱</button><button>⊲</button><button>⊳</button><button>⊴</button><button>⊵</button><button>⊶</button><button>⊷</button><button>⊸</button><button>⊹</button><button>⊺</button>
+      <button>⊻</button><button>⊼</button><button>⊽</button><button>⊾</button><button>⊿</button><button>⋀</button><button>⋁</button><button>⋂</button><button>⋃</button><button>⋄</button><button>⋅</button>
+      <button>⋆</button><button>⋇</button><button>⋈</button><button>⋉</button><button>⋊</button><button>⋋</button><button>⋌</button><button>⋍</button><button>⋎</button><button>⋏</button><button>⋐</button>
+      <button>⋑</button><button>⋒</button><button>⋓</button><button>⋔</button><button>⋕</button><button>⋖</button><button>⋗</button><button>⋘</button><button>⋙</button><button>⋚</button><button>⋛</button>
+      <button>⋜</button><button>⋝</button><button>⋞</button><button>⋟</button><button>⋠</button><button>⋡</button><button>⋢</button><button>⋣</button><button>⋤</button><button>⋥</button><button>⋦</button>
+      <button>⋧</button><button>⋨</button><button>⋩</button><button>⋪</button><button>⋫</button><button>⋬</button><button>⋭</button><button>⋮</button><button>⋯</button><button>⋰</button><button>⋱</button>
+      <button>⋲</button><button>⋳</button><button>⋴</button><button>⋵</button><button>⋶</button><button>⋷</button><button>⋸</button><button>⋹</button><button>⋺</button><button>⋻</button><button>⋼</button>
+      <button>⋽</button><button>⋾</button><button>⋿</button>
+    </div>
+    <div class="characters-pane none" data-type="currency">
+      <button>₠</button><button>₡</button><button>₢</button><button>₣</button><button>₤</button><button>₥</button><button>₦</button><button>₧</button><button>₨</button><button>₩</button><button>₪</button>
+      <button>₫</button><button>€</button><button>₭</button><button>₮</button><button>₯</button><button>₰</button><button>₱</button><button>₲</button><button>₳</button><button>₴</button><button>₵</button>
+      <button>₶</button><button>₷</button><button>₸</button><button>₹</button><button>₺</button><button>₻</button><button>₼</button><button>₽</button><button>₾</button>
+    </div>
+    <div class="characters-pane none" data-type="unit">
+      <button>＄</button><button>％</button><button>￦</button><button>Ｆ</button><button>′</button><button>″</button><button>℃</button><button>Å</button><button>￠</button><button>￡</button>
+      <button>￥</button><button>¤</button><button>℉</button><button>‰</button><button>?</button><button>㎕</button><button>㎖</button><button>㎗</button><button>ℓ</button><button>㎘</button>
+      <button>㏄</button><button>㎣</button><button>㎤</button><button>㎥</button><button>㎥</button><button>㎦</button><button>㎙</button><button>㎚</button><button>㎛</button><button>㎜</button>
+      <button>㎝</button><button>㎞</button><button>㎟</button><button>㎠</button><button>㎡</button><button>㎢</button><button>㏊</button><button>㎍</button><button>㎎</button><button>㎏</button>
+      <button>㏏</button><button>㎈</button><button>㎉</button><button>㏈</button><button>㎧</button><button>㎨</button><button>㎰</button><button>㎱</button><button>㎲</button><button>㎳</button>
+      <button>㎴</button><button>㎵</button><button>㎶</button><button>㎷</button><button>㎸</button><button>㎹</button><button>㎀</button><button>㎁</button><button>㎂</button><button>㎃</button>
+      <button>㎄</button><button>㎺</button><button>㎻</button><button>㎼</button><button>㎽</button><button>㎾</button><button>㎿</button><button>㎐</button><button>㎑</button><button>㎒</button>
+      <button>㎓</button><button>㎔</button><button>Ω</button><button>㏀</button><button>㏁</button><button>㎊</button><button>㎋</button><button>㎌</button><button>㏖</button><button>㏅</button>
+      <button>㎭</button><button>㎮</button><button>㎯</button><button>㏛</button><button>㎩</button><button>㎪</button><button>㎫</button><button>㎬</button><button>㏝</button><button>㏐</button>
+      <button>㏓</button><button>㏃</button><button>㏉</button><button>㏜</button><button>㏆</button>
+    </div>
+    <div class="characters-pane none" data-type="circleBracket">
+      <button>①</button><button>②</button><button>③</button><button>④</button><button>⑤</button><button>⑥</button><button>⑦</button><button>⑧</button><button>⑨</button><button>⑩</button><button>⑪</button>
+      <button>⑫</button><button>⑬</button><button>⑭</button><button>⑮</button><button>⑯</button><button>⑰</button><button>⑱</button><button>⑲</button><button>⑳</button><button>⑴</button><button>⑵</button>
+      <button>⑶</button><button>⑷</button><button>⑸</button><button>⑹</button><button>⑺</button><button>⑻</button><button>⑼</button><button>⑽</button><button>⑾</button><button>⑿</button><button>⒀</button>
+      <button>⒁</button><button>⒂</button><button>⒃</button><button>⒄</button><button>⒅</button><button>⒆</button><button>⒇</button><button>⒈</button><button>⒉</button><button>⒊</button><button>⒋</button>
+      <button>⒌</button><button>⒍</button><button>⒎</button><button>⒏</button><button>⒐</button><button>⒑</button><button>⒒</button><button>⒓</button><button>⒔</button><button>⒕</button><button>⒖</button>
+      <button>⒗</button><button>⒘</button><button>⒙</button><button>⒚</button><button>⒛</button><button>⒜</button><button>⒝</button><button>⒞</button><button>⒟</button><button>⒠</button><button>⒡</button>
+      <button>⒢</button><button>⒣</button><button>⒤</button><button>⒥</button><button>⒦</button><button>⒧</button><button>⒨</button><button>⒩</button><button>⒪</button><button>⒫</button><button>⒬</button>
+      <button>⒭</button><button>⒮</button><button>⒯</button><button>⒰</button><button>⒱</button><button>⒲</button><button>⒳</button><button>⒴</button><button>⒵</button><button>Ⓐ</button><button>Ⓑ</button>
+      <button>Ⓒ</button><button>Ⓓ</button><button>Ⓔ</button><button>Ⓕ</button><button>Ⓖ</button><button>Ⓗ</button><button>Ⓘ</button><button>Ⓙ</button><button>Ⓚ</button><button>Ⓛ</button><button>Ⓜ</button>
+      <button>Ⓝ</button><button>Ⓞ</button><button>Ⓟ</button><button>Ⓠ</button><button>Ⓡ</button><button>Ⓢ</button><button>Ⓣ</button><button>Ⓤ</button><button>Ⓥ</button><button>Ⓦ</button><button>Ⓧ</button>
+      <button>Ⓨ</button><button>Ⓩ</button><button>ⓐ</button><button>ⓑ</button><button>ⓒ</button><button>ⓓ</button><button>ⓔ</button><button>ⓕ</button><button>ⓖ</button><button>ⓗ</button><button>ⓘ</button>
+      <button>ⓙ</button><button>ⓚ</button><button>ⓛ</button><button>ⓜ</button><button>ⓝ</button><button>ⓞ</button><button>ⓟ</button><button>ⓠ</button><button>ⓡ</button><button>ⓢ</button><button>ⓣ</button>
+      <button>ⓤ</button><button>ⓥ</button><button>ⓦ</button><button>ⓧ</button><button>ⓨ</button><button>ⓩ</button><button>⓪</button><button>⓫</button><button>⓬</button><button>⓭</button><button>⓮</button>
+      <button>⓯</button><button>⓰</button><button>⓱</button><button>⓲</button><button>⓳</button><button>⓴</button><button>⓵</button><button>⓶</button><button>⓷</button><button>⓸</button><button>⓹</button>
+      <button>⓺</button><button>⓻</button><button>⓼</button><button>⓽</button><button>⓾</button><button>⓿</button>
+    </div>
+    <div class="characters-pane none" data-type="boxDrawing">
+      <button>─</button><button>━</button><button>│</button><button>┃</button><button>┄</button><button>┅</button><button>┆</button><button>┇</button><button>┈</button><button>┉</button><button>┊</button>
+      <button>┋</button><button>┌</button><button>┍</button><button>┎</button><button>┏</button><button>┐</button><button>┑</button><button>┒</button><button>┓</button><button>└</button><button>┕</button>
+      <button>┖</button><button>┗</button><button>┘</button><button>┙</button><button>┚</button><button>┛</button><button>├</button><button>┝</button><button>┞</button><button>┟</button><button>┠</button>
+      <button>┡</button><button>┢</button><button>┣</button><button>┤</button><button>┥</button><button>┦</button><button>┧</button><button>┨</button><button>┩</button><button>┪</button><button>┫</button>
+      <button>┬</button><button>┭</button><button>┮</button><button>┯</button><button>┰</button><button>┱</button><button>┲</button><button>┳</button><button>┴</button><button>┵</button><button>┶</button>
+      <button>┷</button><button>┸</button><button>┹</button><button>┺</button><button>┻</button><button>┼</button><button>┽</button><button>┾</button><button>┿</button><button>╀</button><button>╁</button>
+      <button>╂</button><button>╃</button><button>╄</button><button>╅</button><button>╆</button><button>╇</button><button>╈</button><button>╉</button><button>╊</button><button>╋</button><button>╌</button>
+      <button>╍</button><button>╎</button><button>╏</button><button>═</button><button>║</button><button>╒</button><button>╓</button><button>╔</button><button>╕</button><button>╖</button><button>╗</button>
+      <button>╘</button><button>╙</button><button>╚</button><button>╛</button><button>╜</button><button>╝</button><button>╞</button><button>╟</button><button>╠</button><button>╡</button><button>╢</button>
+      <button>╣</button><button>╤</button><button>╥</button><button>╦</button><button>╧</button><button>╨</button><button>╩</button><button>╪</button><button>╫</button><button>╬</button><button>╭</button>
+      <button>╮</button><button>╯</button><button>╰</button><button>╱</button><button>╲</button><button>╳</button><button>╴</button><button>╵</button><button>╶</button><button>╷</button><button>╸</button>
+      <button>╹</button><button>╺</button><button>╻</button><button>╼</button><button>╽</button><button>╾</button><button>╿</button>
+    </div>
+    <div class="characters-pane none" data-type="arrow">
+      <button>←</button><button>↑</button><button>→</button><button>↓</button><button>↔</button><button>↕</button><button>↖</button><button>↗</button><button>↘</button><button>↙</button><button>↚</button>
+      <button>↛</button><button>↜</button><button>↝</button><button>↞</button><button>↟</button><button>↠</button><button>↡</button><button>↢</button><button>↣</button><button>↤</button><button>↥</button>
+      <button>↦</button><button>↧</button><button>↨</button><button>↩</button><button>↪</button><button>↫</button><button>↬</button><button>↭</button><button>↮</button><button>↯</button><button>↰</button>
+      <button>↱</button><button>↲</button><button>↳</button><button>↴</button><button>↵</button><button>↶</button><button>↷</button><button>↸</button><button>↹</button><button>↺</button><button>↻</button>
+      <button>↼</button><button>↽</button><button>↾</button><button>↿</button><button>⇀</button><button>⇁</button><button>⇂</button><button>⇃</button><button>⇄</button><button>⇅</button><button>⇆</button>
+      <button>⇇</button><button>⇈</button><button>⇉</button><button>⇊</button><button>⇋</button><button>⇌</button><button>⇍</button><button>⇎</button><button>⇏</button><button>⇐</button><button>⇑</button>
+      <button>⇒</button><button>⇓</button><button>⇔</button><button>⇕</button><button>⇖</button><button>⇗</button><button>⇘</button><button>⇙</button><button>⇚</button><button>⇛</button><button>⇜</button>
+      <button>⇝</button><button>⇞</button><button>⇟</button><button>⇠</button><button>⇡</button><button>⇢</button><button>⇣</button><button>⇤</button><button>⇥</button><button>⇦</button><button>⇧</button>
+      <button>⇳</button><button>⇴</button><button>⇵</button><button>⇶</button><button>⇷</button><button>⇸</button><button>⇹</button><button>⇺</button><button>⇻</button><button>⇼</button><button>⇽</button>
+      <button>⇨</button><button>⇩</button><button>⇪</button><button>⇫</button><button>⇬</button><button>⇭</button><button>⇮</button><button>⇯</button><button>⇰</button><button>⇱</button><button>⇲</button>
+      <button>⇾</button><button>⇿</button>
+    </div>
+    <div class="characters-pane none" data-type="greekLatin">
+      <button>А</button><button>Б</button><button>В</button><button>Г</button><button>Д</button><button>Е</button><button>Ё</button><button>Ж</button><button>З</button><button>И</button><button>Й</button>
+      <button>К</button><button>Л</button><button>М</button><button>Н</button><button>О</button><button>П</button><button>Р</button><button>С</button><button>Т</button><button>У</button><button>Ф</button>
+      <button>Х</button><button>Ц</button><button>Ч</button><button>Ш</button><button>Щ</button><button>Ъ</button><button>Ы</button><button>Ь</button><button>Э</button><button>Ю</button><button>Я</button>
+      <button>а</button><button>б</button><button>в</button><button>г</button><button>д</button><button>е</button><button>ё</button><button>ж</button><button>з</button><button>и</button><button>й</button>
+      <button>к</button><button>л</button><button>м</button><button>н</button><button>о</button><button>п</button><button>р</button><button>с</button><button>т</button><button>у</button><button>ф</button>
+      <button>х</button><button>ц</button><button>ч</button><button>ш</button><button>щ</button><button>ъ</button><button>ы</button><button>ь</button><button>э</button><button>ю</button><button>я</button>
+      <button>Æ</button><button>Ð</button><button>Ħ</button><button>Ĳ</button><button>Ŀ</button><button>Ł</button><button>Ø</button><button>Œ</button><button>Þ</button><button>Ŧ</button><button>Ŋ</button>
+      <button>æ</button><button>đ</button><button>ð</button><button>ħ</button><button>ı</button><button>ĳ</button><button>ĸ</button><button>ŀ</button><button>ł</button><button>ø</button><button>œ</button>
+      <button>ß</button><button>þ</button><button>ŧ</button><button>ŋ</button><button>ŉ</button>
+    </div>
+    <div class="characters-pane none" data-type="korean">
+      <button>ㄱ</button><button>ㄲ</button><button>ㄳ</button><button>ㄴ</button><button>ㄵ</button><button>ㄶ</button><button>ㄷ</button><button>ㄸ</button><button>ㄹ</button><button>ㄺ</button>
+      <button>ㄻ</button><button>ㄼ</button><button>ㄽ</button><button>ㄾ</button><button>ㄿ</button><button>ㅀ</button><button>ㅁ</button><button>ㅂ</button><button>ㅃ</button><button>ㅄ</button>
+      <button>ㅅ</button><button>ㅆ</button><button>ㅇ</button><button>ㅈ</button><button>ㅉ</button><button>ㅊ</button><button>ㅋ</button><button>ㅌ</button><button>ㅍ</button><button>ㅎ</button>
+      <button>ㅏ</button><button>ㅐ</button><button>ㅑ</button><button>ㅒ</button><button>ㅓ</button><button>ㅔ</button><button>ㅕ</button><button>ㅖ</button><button>ㅗ</button><button>ㅘ</button>
+      <button>ㅙ</button><button>ㅚ</button><button>ㅛ</button><button>ㅜ</button><button>ㅝ</button><button>ㅞ</button><button>ㅟ</button><button>ㅠ</button><button>ㅡ</button><button>ㅢ</button>
+      <button>ㅣ</button>
+      <button>ㅥ</button><button>ㅦ</button><button>ㅧ</button><button>ㅨ</button><button>ㅩ</button><button>ㅪ</button><button>ㅫ</button><button>ㅬ</button><button>ㅭ</button><button>ㅮ</button>
+      <button>ㅯ</button><button>ㅰ</button><button>ㅱ</button><button>ㅲ</button><button>ㅳ</button><button>ㅴ</button><button>ㅵ</button><button>ㅶ</button><button>ㅷ</button><button>ㅸ</button>
+      <button>ㅹ</button><button>ㅺ</button><button>ㅻ</button><button>ㅼ</button><button>ㅽ</button><button>ㅾ</button><button>ㅿ</button><button>ㆀ</button><button>ㆁ</button><button>ㆂ</button>
+      <button>ㆃ</button><button>ㆄ</button><button>ㆅ</button><button>ㆆ</button><button>ㆇ</button><button>ㆈ</button><button>ㆉ</button><button>ㆊ</button><button>ㆋ</button><button>ㆌ</button>
+      <button>ㆍ</button><button>ㆎ</button>
+    </div>
+    <div class="characters-pane none" data-type="japanese">
+      <button>ァ</button><button>ア</button><button>ィ</button><button>イ</button><button>ゥ</button><button>ウ</button><button>ェ</button><button>エ</button><button>ォ</button><button>オ</button>
+      <button>カ</button><button>ガ</button><button>キ</button><button>ギ</button><button>ク</button><button>グ</button><button>ケ</button><button>ゲ</button><button>コ</button><button>ゴ</button>
+      <button>サ</button><button>ザ</button><button>シ</button><button>ジ</button><button>ス</button><button>ズ</button><button>セ</button><button>ゼ</button><button>ソ</button><button>ゾ</button>
+      <button>タ</button><button>ダ</button><button>チ</button><button>ヂ</button><button>ッ</button><button>ツ</button><button>ヅ</button><button>テ</button><button>デ</button><button>ト</button>
+      <button>ド</button><button>ナ</button><button>ニ</button><button>ヌ</button><button>ネ</button><button>ノ</button><button>ハ</button><button>バ</button><button>パ</button><button>ヒ</button>
+      <button>ビ</button><button>ピ</button><button>フ</button><button>ブ</button><button>プ</button><button>ヘ</button><button>ベ</button><button>ペ</button><button>ホ</button><button>ボ</button>
+      <button>ポ</button><button>マ</button><button>ミ</button><button>ム</button><button>メ</button><button>モ</button><button>ャ</button><button>ヤ</button><button>ュ</button><button>ユ</button>
+      <button>ョ</button><button>ヨ</button><button>ラ</button><button>リ</button><button>ル</button><button>レ</button><button>ロ</button><button>ヮ</button><button>ワ</button><button>ヰ</button>
+      <button>ヱ</button><button>ヲ</button><button>ン</button><button>ヴ</button><button>ヵ</button><button>ヶ</button>
+      <button>ぁ</button><button>あ</button><button>ぃ</button><button>い</button><button>ぅ</button><button>う</button><button>ぇ</button><button>え</button><button>ぉ</button><button>お</button>
+      <button>か</button><button>が</button><button>き</button><button>ぎ</button><button>く</button><button>ぐ</button><button>け</button><button>げ</button><button>こ</button><button>ご</button>
+      <button>さ</button><button>ざ</button><button>し</button><button>じ</button><button>す</button><button>ず</button><button>せ</button><button>ぜ</button><button>そ</button><button>ぞ</button>
+      <button>た</button><button>だ</button><button>ち</button><button>ぢ</button><button>っ</button><button>つ</button><button>づ</button><button>て</button><button>で</button><button>と</button>
+      <button>ど</button><button>な</button><button>に</button><button>ぬ</button><button>ね</button><button>の</button><button>は</button><button>ば</button><button>ぱ</button><button>ひ</button>
+      <button>び</button><button>ぴ</button><button>ふ</button><button>ぶ</button><button>ぷ</button><button>へ</button><button>べ</button><button>ぺ</button><button>ほ</button><button>ぼ</button>
+      <button>ぽ</button><button>ま</button><button>み</button><button>む</button><button>め</button><button>も</button><button>ゃ</button><button>や</button><button>ゅ</button><button>ゆ</button>
+      <button>ょ</button><button>よ</button><button>ら</button><button>り</button><button>る</button><button>れ</button><button>ろ</button><button>ゎ</button><button>わ</button><button>ゐ</button>
+      <button>ゑ</button><button>を</button><button>ん</button>
+    </div>
+    <div class="characters-pane none" data-type="emoji">
+      <button>😀</button><button>😁</button><button>😂</button><button>😃</button><button>😄</button><button>😅</button><button>😆</button><button>😇</button><button>😈</button><button>😉</button><button>😊</button>
+      <button>😋</button><button>😌</button><button>😍</button><button>😎</button><button>😏</button><button>😐</button><button>😑</button><button>😒</button><button>😓</button><button>😔</button><button>😕</button>
+      <button>😖</button><button>😗</button><button>😘</button><button>😙</button><button>😚</button><button>😛</button><button>😜</button><button>😝</button><button>😞</button><button>😟</button><button>😠</button>
+      <button>😡</button><button>😢</button><button>😣</button><button>😤</button><button>😥</button><button>😦</button><button>😧</button><button>😨</button><button>😩</button><button>😪</button><button>😫</button>
+      <button>😬</button><button>😭</button><button>😮</button><button>😯</button><button>😰</button><button>😱</button><button>😲</button><button>😳</button><button>😴</button><button>😵</button><button>😶</button>
+      <button>😷</button>
+      <button>🐀</button><button>🐁</button><button>🐂</button><button>🐃</button><button>🐄</button><button>🐅</button><button>🐆</button><button>🐇</button><button>🐈</button><button>🐉</button><button>🐊</button>
+      <button>🐋</button><button>🐌</button><button>🐍</button><button>🐎</button><button>🐏</button><button>🐐</button><button>🐑</button><button>🐒</button><button>🐓</button><button>🐔</button><button>🐕</button>
+      <button>🐖</button><button>🐗</button><button>🐘</button><button>🐙</button><button>🐚</button><button>🐛</button><button>🐜</button><button>🐝</button><button>🐞</button><button>🐟</button><button>🐠</button>
+      <button>🐡</button><button>🐢</button><button>🐣</button><button>🐤</button><button>🐥</button><button>🐦</button><button>🐧</button><button>🐨</button><button>🐩</button><button>🐪</button><button>🐫</button>
+      <button>🐬</button><button>🐭</button><button>🐮</button><button>🐯</button><button>🐰</button><button>🐱</button><button>🐲</button><button>🐳</button><button>🐴</button><button>🐵</button><button>🐶</button>
+      <button>🐷</button><button>🐸</button><button>🐹</button><button>🐺</button><button>🐻</button><button>🐼</button><button>🐽</button><button>🐾</button><button>🐿️</button>
+      <button>💓</button><button>💔</button><button>💕</button><button>💖</button><button>💗</button><button>💘</button><button>💙</button><button>💚</button><button>💛</button><button>💜</button><button>💝</button>
+      <button>💞</button><button>💟</button>
+    </div>
+    <div class="characters-pane none" data-type="recently">
+    </div>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
+
