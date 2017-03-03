@@ -94,6 +94,12 @@
     var recentlyTab = document.querySelector('.tab[data-type="recently"]');
 
     recentlyTab.classList.remove('none');
+
+    tabs[0].classList.add('active');
+    filterByTab(tabs[0].getAttribute('data-type'));
+  } else {
+    tabs[1].classList.add('active');
+    filterByTab(tabs[1].getAttribute('data-type'));
   }
 
   // Declare functions
