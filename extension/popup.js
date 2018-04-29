@@ -1,6 +1,7 @@
 (function () {
   // Variables
   var MAX_RECENT_CHAR_CNT = 50;
+  var MAX_FAVORITE_CHAR_CNT = 50;
   var
     i,
     len,
@@ -31,6 +32,7 @@
         japanese: '일본어',
         emoji: '이모지',
         recently: '최근',
+        favorite: '즐겨찾기',
       },
       en: {
         copy: 'Copy',
@@ -51,6 +53,7 @@
         japanese: 'Japanese',
         emoji: 'Emoji',
         recently: 'Recently',
+        favorite: 'Favorite',
       },
     };
 
@@ -86,20 +89,29 @@
 
         copyText(text);
       });
+
+      buttons[i].addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        var text = buttons[i].textContent.trim();
+
+        saveFavCharacters(text);
+      });
     })(i);
   }
 
   // If localStorage is defined, activate "Recently" menu.
   if (localStorage) {
     var recentlyTab = document.querySelector('.tab[data-type="recently"]');
+    var favoriteTab = document.querySelector('.tab[data-type="favorite"]');
 
     recentlyTab.classList.remove('none');
+    favoriteTab.classList.remove('none');
 
     tabs[0].classList.add('active');
     filterByTab(tabs[0].getAttribute('data-type'));
   } else {
-    tabs[1].classList.add('active');
-    filterByTab(tabs[1].getAttribute('data-type'));
+    tabs[2].classList.add('active');
+    filterByTab(tabs[2].getAttribute('data-type'));
   }
 
   // Declare functions
@@ -172,6 +184,8 @@
 
         if (type === 'recently') {
           renderRecentlyCharacters();
+        } else if (type === 'favorite') {
+          renderFavoriteCharacters();
         }
       }
     });
@@ -179,15 +193,16 @@
 
   function saveUsedCharacters(c) {
     var
+      recentlyCharacters = Object.keys(localStorage).filter(function (key) { return key.indexOf('rec-') !== -1; }),
       charactersArr = [],
       overlapIndex = -1,
       exceedLength,
       propertyName;
 
-    for (var i = 0, len = localStorage.length; i < len; i++) {
-      charactersArr.push(localStorage.getItem(i));
+    for (var i = 0, len = recentlyCharacters.length; i < len; i++) {
+      charactersArr.push(localStorage.getItem('rec-' + i));
 
-      if (localStorage.getItem(i) === c) {
+      if (localStorage.getItem('rec-' + i) === c) {
         overlapIndex = +i;
       }
     }
@@ -205,20 +220,21 @@
     }
 
     charactersArr.forEach(function (el, i) {
-      localStorage.setItem(i, el);
+      localStorage.setItem('rec-' + i, el);
     });
   }
 
   function renderRecentlyCharacters() {
     var
+      recentlyCharacters = Object.keys(localStorage).filter(function (key) { return key.indexOf('rec-') !== -1; }),
       recentlyPane = document.querySelector('.characters-pane[data-type="recently"]'),
       docFragment = document.createDocumentFragment(),
       pasteButtons;
 
-    for (var i = 0, len = localStorage.length; i < len; i++) {
+    for (var i = 0, len = recentlyCharacters.length; i < len; i++) {
       var buttonElement = document.createElement('button');
 
-      buttonElement.innerText = localStorage.getItem(i) || '';
+      buttonElement.innerText = localStorage.getItem('rec-' + i) || '';
       buttonElement.addEventListener('click', function () {
         var text = buttonElement.textContent;
 
@@ -241,6 +257,84 @@
           copyText(text);
         });
       })(i);
+    }
+  }
+
+  function saveFavCharacters(c) {
+    var
+      favoriteCharacters = Object.keys(localStorage).filter(function (key) { return key.indexOf('fav-') !== -1; }),
+      charactersArr = [],
+      overlapIndex = -1,
+      exceedLength,
+      propertyName;
+
+    for (var i = 0, len = favoriteCharacters.length; i < len; i++) {
+      charactersArr.push(localStorage.getItem('fav-' + i));
+
+      if (localStorage.getItem('fav-' + i) === c) {
+        overlapIndex = +i;
+      }
+    }
+
+    if (overlapIndex !== -1) {
+      charactersArr.splice(overlapIndex, 1);
+    }
+
+    charactersArr.push(c);
+
+    exceedLength = charactersArr.length;
+
+    if (exceedLength > MAX_FAVORITE_CHAR_CNT) {
+      charactersArr.splice(0, exceedLength - i);
+    }
+
+    charactersArr.forEach(function (el, i) {
+      localStorage.setItem('fav-' + i, el);
+    });
+  }
+
+  function renderFavoriteCharacters() {
+    var
+      favoriteCharacters = Object.keys(localStorage).filter(function (key) { return key.indexOf('fav-') !== -1; }),
+      favoritePane = document.querySelector('.characters-pane[data-type="favorite"]'),
+      docFragment = document.createDocumentFragment(),
+      pasteButtons;
+
+    if (favoriteCharacters.length > 0) {
+      for (var i = 0, len = favoriteCharacters.length; i < len; i++) {
+        var buttonElement = document.createElement('button');
+
+        buttonElement.innerText = localStorage.getItem('fav-' + i) || '';
+        buttonElement.addEventListener('click', function () {
+          var text = buttonElement.textContent;
+
+          copyText(text);
+        });
+
+        docFragment.insertBefore(buttonElement, docFragment.firstChild);
+      }
+
+      favoritePane.innerHTML = null;
+      favoritePane.appendChild(docFragment.cloneNode(true));
+
+      pasteButtons = favoritePane.querySelectorAll('button');
+
+      for (var i = 0, len = pasteButtons.length; i < len; i++) {
+        (function (i) {
+          pasteButtons[i].addEventListener('click', function () {
+            var text = pasteButtons[i].textContent.trim();
+
+            copyText(text);
+          });
+        })(i);
+      }
+    } else {
+      var textElement = document.createElement('div');
+      textElement.innerText = 'To use, right-click on special characters';
+      docFragment.insertBefore(textElement, docFragment.firstChild);
+
+      favoritePane.innerHTML = null;
+      favoritePane.appendChild(docFragment.cloneNode(true));
     }
   }
 })();

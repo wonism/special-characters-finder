@@ -118,6 +118,10 @@
     .characters-pane p {
       font-size: 10px;
     }
+    .characters-pane div {
+      font-size: 12px;
+      text-align: center;
+    }
     .characters-pane button {
       display: inline-block;
       padding: 0;
@@ -165,6 +169,7 @@
     <input id="filter" placeholder="Input Korean consonant(ㄱ,ㄴ,ㄷ...) for searching." />
     <ul>
       <li class="tab none" data-type="recently">Recently</li>
+      <li class="tab none" data-type="favorite">Favorite</li>
       <li class="tab" data-type="general">General</li>
       <li class="tab" data-type="numeric">Numeric</li>
       <li class="tab" data-type="math">Math</li>
@@ -497,6 +502,8 @@
       <button>💞</button><button>💟</button>
     </div>
     <div class="characters-pane none" data-type="recently">
+    </div>
+    <div class="characters-pane none" data-type="favorite">
     </div>
   </main>
   <script src="popup.js"></script>
